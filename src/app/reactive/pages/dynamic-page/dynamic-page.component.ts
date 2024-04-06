@@ -25,6 +25,10 @@ export class DynamicPageComponent {
     this.myForm.reset();
   }
 
+  onDeleteFavorite(index: number): void {
+    this.favoriteGames.removeAt(index);
+  }
+
   get favoriteGames() {
     return this.myForm.get('favoriteGames') as FormArray;
   }
@@ -35,7 +39,7 @@ export class DynamicPageComponent {
     );
   }
 
-  isValidFieldInArray(formArray: FormArray, index: number): any {
+  isValidFieldInArray(formArray: FormArray, index: number): boolean | null {
     return (
       formArray.controls[index].errors && formArray.controls[index].touched
     );
