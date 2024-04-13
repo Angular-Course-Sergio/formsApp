@@ -6,6 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { ValidatorsService } from '../../../shared/services/validators.service';
 
 @Component({
   selector: 'reactive-dynamic-page',
@@ -22,7 +23,10 @@ export class DynamicPageComponent {
 
   public newFavorite: FormControl = new FormControl('', [Validators.required]);
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private validatorsService: ValidatorsService
+  ) {}
 
   onSubmit(): void {
     if (this.myForm.invalid) {
@@ -52,9 +56,7 @@ export class DynamicPageComponent {
   }
 
   isValidField(field: string): boolean | null {
-    return (
-      this.myForm.controls[field].errors && this.myForm.controls[field].touched
-    );
+    return this.validatorsService.isValidField(this.myForm, field);
   }
 
   isValidFieldInArray(formArray: FormArray, index: number): boolean | null {
